@@ -1,0 +1,122 @@
+Metadata-Version: 2.1
+Name: gplugins
+Version: 0.0.2
+Summary: gdsfactory plugins
+Keywords: python
+Author-email: gdsfactory <contact@gdsfactory.com>
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Dist: gdsfactory[cad]
+Requires-Dist: sqlalchemy ; extra == "database"
+Requires-Dist: sqlalchemy-utils ; extra == "database"
+Requires-Dist: dagster ; extra == "database"
+Requires-Dist: dagit ; extra == "database"
+Requires-Dist: sqlmodel ; extra == "database"
+Requires-Dist: boto3 ; extra == "database"
+Requires-Dist: pymysql ; extra == "database"
+Requires-Dist: pre-commit ; extra == "dev"
+Requires-Dist: pytest ; extra == "dev"
+Requires-Dist: pytest-cov ; extra == "dev"
+Requires-Dist: pytest_regressions ; extra == "dev"
+Requires-Dist: jsondiff ; extra == "dev"
+Requires-Dist: mypy ; extra == "dev"
+Requires-Dist: devsim ; extra == "devsim"
+Requires-Dist: pyvista ; extra == "devsim"
+Requires-Dist: tidy3d ; extra == "devsim"
+Requires-Dist: jupytext ; extra == "docs"
+Requires-Dist: autodoc_pydantic ; extra == "docs"
+Requires-Dist: matplotlib ; extra == "docs"
+Requires-Dist: jupyter-book==0.15.1 ; extra == "docs"
+Requires-Dist: sphinx-autodoc-typehints ; extra == "docs"
+Requires-Dist: sphinx-click ; extra == "docs"
+Requires-Dist: femwell==0.1.5 ; extra == "femwell"
+Requires-Dist: gmsh ; extra == "gmsh"
+Requires-Dist: h5py ; extra == "gmsh"
+Requires-Dist: mapbox_earcut ; extra == "gmsh"
+Requires-Dist: meshio ; extra == "gmsh"
+Requires-Dist: pygmsh ; extra == "gmsh"
+Requires-Dist: pyvista ; extra == "gmsh"
+Requires-Dist: trimesh ; extra == "gmsh"
+Requires-Dist: shapely ; extra == "gmsh"
+Requires-Dist: kfactory[git,ipy]==0.7.5 ; extra == "kfactory"
+Requires-Dist: meow-sim==0.7.1 ; extra == "meow"
+Requires-Dist: meshwell==0.0.9 ; extra == "meshwell"
+Requires-Dist: ray[tune,air] ; extra == "ray"
+Requires-Dist: hyperopt ; extra == "ray"
+Requires-Dist: sax==0.8.8 ; extra == "sax"
+Requires-Dist: jaxlib ; extra == "sax"
+Requires-Dist: jax ; extra == "sax"
+Requires-Dist: tidy3d==2.3.3 ; extra == "tidy3d"
+Provides-Extra: database
+Provides-Extra: dev
+Provides-Extra: devsim
+Provides-Extra: docs
+Provides-Extra: femwell
+Provides-Extra: gmsh
+Provides-Extra: kfactory
+Provides-Extra: meow
+Provides-Extra: meshwell
+Provides-Extra: ray
+Provides-Extra: sax
+Provides-Extra: tidy3d
+
+# gplugins 0.0.2 gdsfactory plugins
+
+* [Optimization](https://gdsfactory.github.io/gplugins/plugins_optimization.html)
+  - [Ray Tune Generic Black-Box Optimiser](https://gdsfactory.github.io/gplugins/notebooks/ray/optimiser.html)
+
+* [Meshing](https://gdsfactory.github.io/gplugins/notebooks/devsim/01_pin_waveguide.html#Meshing)
+
+* [Device Simulators](https://gdsfactory.github.io/gplugins/plugins_process.html)
+  - [Thermal Simulation](https://gdsfactory.github.io/gplugins/notebooks/thermal/thermal.html)
+  - [DEVSIM TCAD Simulation](https://gdsfactory.github.io/gplugins/notebooks/devsim/01_pin_waveguide.html)
+  - [Analytical Process Simulation](https://gdsfactory.github.io/gplugins/notebooks/tcad/02_analytical_process.html)
+  - [Montecarlo Implant Simulation](https://gdsfactory.github.io/gplugins/notebooks/tcad/03_numerical_implantation.html)
+
+* [Mode Solvers & Eigenmode Expansion (EME)](https://gdsfactory.github.io/gplugins/plugins_mode_solver.html)
+  - Finite Element Mode Solvers
+    - [Femwell](https://gdsfactory.github.io/gplugins/notebooks/fem/01_mode_solving.html)
+  - Finite Difference Mode Solvers
+    - [tidy3d](https://gdsfactory.github.io/gplugins/notebooks/tidy3d/01_tidy3d_modes.html)
+    - [MPB](https://gdsfactory.github.io/gplugins/notebooks/mpb/001_mpb_waveguide.html)
+  - Eigenmode Expansion (EME)
+    - [MEOW](https://gdsfactory.github.io/gplugins/notebooks/eme/01_meow.html)
+
+* [Electromagnetic Wave Solvers using Finite Difference Time Domain (FDTD)](https://gdsfactory.github.io/gplugins/plugins_fdtd.html)
+  - [tidy3d](https://gdsfactory.github.io/gplugins/notebooks/tidy3d/00_tidy3d.html)
+  - [MEEP](https://gdsfactory.github.io/gplugins/notebooks/meep/001_meep_sparameters.html)
+  - [Ansys Lumerical FDTD](https://gdsfactory.github.io/gplugins/notebooks/lumerical/1_fdtd_sparameters.html)
+
+* [S-Parameter Circuit Solvers](https://gdsfactory.github.io/gplugins/plugins_circuits.html)
+  - [SAX](https://gdsfactory.github.io/gplugins/notebooks/sax/sax.html)
+  - [Ansys Lumerical INTERCONNECT](https://gdsfactory.github.io/gplugins/notebooks/lumerical/2_interconnect.html)
+
+* [Database](https://gdsfactory.github.io/gplugins/notebooks/12_database.html)
+
+
+## Installation
+
+You can install all plugins with:
+
+```
+pip install "gplugins[database,devsim,femwell,gmsh,kfactory,meow,meshwell,ray,sax,tidy3d]" --upgrade
+```
+
+Or Install only the plugins you need `pip install gplugins[plugin1,plugin2]` from the available plugins:
+
+- `database` for simulation and measurement database.
+- `devsim` TCAD device simulator.
+- `femwell` Finite Element Method Solver (heaters, modes, TCAD, RF waveguides).
+- `gmsh` mesh structures.
+- `kfactory` for fill, dataprep and testing.
+- `meow` Eigen Mode Expansion (EME).
+- `ray` for distributed computing and optimization.
+- `sax` S-parameter circuit solver.
+- `tidy3d` Finite Difference Time Domain (FDTD) simulations on the cloud using GPU.
+
+To install open source FDTD Meep you need to use `conda` or `mamba` on MacOS or Linux, so for Windows you need to use the [WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install).
+- `conda install pymeep=*=mpi_mpich_* -c conda-forge -y`
+

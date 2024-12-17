@@ -60,7 +60,7 @@ class CPW:
         else:
             return u0 / 4 * self.K(self.k_prime) / self.K(self.k)
     
-    def solve_for_impedance(self, target = 50, test_param = None, p0=1, bounds=(1e-3, 100)):
+    def solve_for_impedance(self, target = 50, test_param = None, p0=1, bounds=(1e-3, 200)):
         if test_param == 's':
             return root_scalar(lambda s: self.impedance(self.w, s)-target, x0=p0, bracket=bounds)['root']
         elif test_param == 'w':

@@ -1,0 +1,58 @@
+Metadata-Version: 2.1
+Name: kweb
+Version: 0.1.1
+Summary: KLayout API implementation of gdsfactory
+Author-email: gdsfactory community <contact@gdsfactory.com>
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: klayout (>=0.28.3)
+Requires-Dist: fastapi
+Requires-Dist: uvicorn[standard]
+Requires-Dist: jinja2
+Provides-Extra: dev
+Requires-Dist: mypy ; extra == 'dev'
+Requires-Dist: pre-commit ; extra == 'dev'
+Requires-Dist: commitizen ; extra == 'dev'
+Requires-Dist: gitpython ; extra == 'dev'
+Requires-Dist: pylsp-mypy ; extra == 'dev'
+Requires-Dist: types-cachetools ; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: sphinx ; extra == 'docs'
+Requires-Dist: docutils (==0.17.1) ; extra == 'docs'
+Requires-Dist: sphinx-rtd-theme ; extra == 'docs'
+Requires-Dist: sphinxcontrib-video ; extra == 'docs'
+Requires-Dist: sphinx-autodoc-typehints ; extra == 'docs'
+Requires-Dist: sphinx-book-theme (==0.3.3) ; extra == 'docs'
+Requires-Dist: sphinx-click ; extra == 'docs'
+Requires-Dist: sphinx-copybutton ; extra == 'docs'
+Requires-Dist: sphinx-markdown-tables (==0.0.17) ; extra == 'docs'
+Requires-Dist: myst-parser ; extra == 'docs'
+Requires-Dist: matplotlib ; extra == 'docs'
+Requires-Dist: nbsphinx ; extra == 'docs'
+Requires-Dist: autodoc-pydantic ; extra == 'docs'
+Provides-Extra: ipy
+Requires-Dist: ipython ; extra == 'ipy'
+Requires-Dist: ipywidgets ; extra == 'ipy'
+Requires-Dist: ipyevents ; extra == 'ipy'
+Provides-Extra: tests
+Requires-Dist: pytest ; extra == 'tests'
+Requires-Dist: pytest-cov ; extra == 'tests'
+
+# kweb 0.1.1
+
+KLayout Web Viewer ![demo](https://i.imgur.com/HPvePvX.png)
+
+Based on https://github.com/klayoutmatthias/canvas2canvas
+
+## Run
+
+Go to src/kweb and run
+`uvicorn main:app --reload`
+
+Go to http://127.0.0.1:8000/gds/wg to open the waveguide example

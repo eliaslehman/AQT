@@ -1,22 +1,29 @@
 import numpy as np
 import gdsfactory as gf
+from .layermap import QFaBLayers
+from .utils import round_to_even_float
+layermap = QFaBLayers
 
 class Trace():
     """Class for drawing wires along a input path
         Args: 
-        line_wdith: 1xN array of widths for path segments
-        num_lines: N lines for drawing CPW or other multiline comps
+        line_width: 1xN array of widths for path segments
         start: init coordinate
-        line_spacing: spacing outside the edge of the trace line
+        width_func: for smooth tapering
     """
-    def __init__(self, width, spacing, start=(0, 0), width_func=None):
+    def __init__(self, 
+                 width: float = 10, 
+                 spacing: float = 6,
+                 start: tuple = (0, 0),
+                 width_func=None):
+        
         self.path = gf.path.straight(length=0)
-        self.line_width = width
-        self.line_spacing = spacing
+        self.line_width = round_to_even_float(width)
+        self.line_spacing = round_to_even_float(spacing)
         self.start = start
         self.width_func = width_func
     
-    def straight(self, length):
+    def straight(self, length:float=100):
         """Adds a straight portion to this Trace's path.
         
         Args:
@@ -25,7 +32,7 @@ class Trace():
         self.path += gf.path.straight(length)
         return self
 
-    def turn(self, radius, angle):
+    def turn(self, radius:float, angle:float):
         """Adds a turn to this Trace's path.
         
         Args:
@@ -37,8 +44,8 @@ class Trace():
     
     def half_segment(
             self, 
-            length, 
-            radius):
+            length:float, 
+            radius:float):
         """Half a meander segment in length, followed by a quarter turn.
         
         Args:
@@ -52,12 +59,12 @@ class Trace():
 
     def meander(
         self,
-        num_segments,
-        length,
-        radius,
-        turn=1,
-        extra_turns='both',
-        length_type='segment',
+        num_segments: int,
+        length: float,
+        radius: float,
+        turn:int=1,
+        extra_turns:str='both',
+        length_type:str='segment',
     ):
         """Draws a meandering section that begins with a straight segment.
 
@@ -66,9 +73,9 @@ class Trace():
             length (float): The length of the straight segments or the total
                 length, depending on the value of `length_type`.
             radius (float): The radius of the turn.
-            turn (int): The direction of the first turn is given by `pi * turn`
+            turn (int): The direction of the first turn is given by `pi * turn`. Must be `-1` or `1` (turn down or up, respectively).
             length_type (str): Specifies whether `length` is the segment
-                length or the total length of the meander.
+                length (`segment`) or the total length of the meander (!`segment`).
             extra_turns (str): A keyword that specifies whether to add an extra 
                 at the start of the meander, the end of the meander, or both. 
                 Valid keywords are `start`, `end`, `both`.
@@ -109,10 +116,11 @@ class Trace():
     def get_cross_section(self):
         section = []
         if self.width_func:
-            section.append(gf.Section(width=0, width_function=self.width_func, offset=0, layer=(1, 0), name = 'line_w', port_names=('in_w', 'out_w')))
+            section.append(gf.Section(width=0, width_function=self.width_func, offset=0, layer=(1, 0), name = 'line_w', port_names=('in_w', 'out_w'), port_types=('electrical','electrical')))
         else:
-            section.append(gf.Section(width=self.line_width, offset=0, layer=(1, 0), name = 'line_w', port_names=('in_w', 'out_w')))
-            # section.append(gf.Section(width=self.line_width+2*self.line_spacing, offset=0, layer=(2, 0), name = f'line_s', port_names=(f'in_s', f'out_s')))
+            section.append(gf.Section(width=self.line_width, layer=layermap.SC1, name = 'line_w', port_names=('in_w', 'out_w'), port_types=('electrical','electrical')))
+            section.append(gf.Section(width=self.line_spacing, offset=(self.line_spacing+self.line_width)/2, layer=layermap.SC1_E, name = 'line_s_top', port_names=('in_s_t', 'out_s_t'), port_types=('electrical','electrical')))
+            section.append(gf.Section(width=self.line_spacing, offset=-(self.line_spacing+self.line_width)/2, layer=layermap.SC1_E, name = 'line_s_bot', port_names=('in_s_b', 'out_s_b'), port_types=('electrical','electrical')))
         return gf.CrossSection(sections = section)
 
     def make(self):
